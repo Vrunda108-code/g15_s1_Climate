@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{\textbf{CSE400 – Fundamentals of Probability in Computing}\\
+Lecture 4: Joint Probability and Conditional Probability}
+\author{Instructor: Dhaval Patel, PhD}
+\date{January 15, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction to Probability Theory}
+
+\subsection*{Experiments, Sample Space, and Events}
+
+\paragraph{Experiment (E)}
+An experiment is a procedure that produces an outcome. The result is not known in advance but follows well-defined rules.
+
+\textbf{Example:} Tossing a coin five times.
+
+\paragraph{Outcome ($\omega$)}
+An outcome is a single possible result of an experiment.
+
+\textbf{Example:} One possible outcome of tossing a coin five times is HHTHT.
+
+\paragraph{Event}
+An event is a collection (set) of outcomes from the same experiment. Events are usually denoted by capital letters.
+
+\textbf{Example:} For the coin-tossing experiment, let event $C$ be:
+\[
+C = \{\text{all outcomes consisting of an even number of heads}\}
+\]
+This means $C$ contains many outcomes, not just one.
+
+\paragraph{Sample Space ($S$)}
+The sample space is the set of all possible distinct outcomes of an experiment.
+
+\textbf{Key properties:}
+\begin{itemize}
+    \item \textbf{Mutually Exclusive:} No two outcomes can occur at the same time.
+    \item \textbf{Collectively Exhaustive:} One of the outcomes must occur.
+\end{itemize}
+
+\textbf{Example:} For a single coin flip:
+\begin{itemize}
+    \item Heads and tails are mutually exclusive.
+    \item Heads and tails together exhaust all possibilities.
+\end{itemize}
+
+The sample space $S$ is the universal set for the experiment.
+
+\section*{Types of Sample Spaces}
+
+A sample space can be:
+\begin{itemize}
+    \item Discrete
+    \item Countably infinite
+    \item Continuous
+\end{itemize}
+
+\textbf{Examples:}
+\begin{itemize}
+    \item Flipping a fair coin once
+    \item Rolling a cubical die
+    \item Rolling two dice
+    \item Flipping a coin until a tail occurs
+    \item Random number generator on interval $[0,1)$
+\end{itemize}
+
+\section*{Axioms of Probability}
+
+\paragraph{Probability}
+Probability is a numerical measure of how likely an event is to occur. It is a function that maps events to numbers between 0 and 1.
+
+\paragraph{Axioms}
+\begin{enumerate}
+    \item For any event $A$:
+    \[
+    0 \leq \Pr(A) \leq 1
+    \]
+    \item If $S$ is the sample space:
+    \[
+    \Pr(S) = 1
+    \]
+    \item If $A$ and $B$ are mutually exclusive ($A \cap B = \varnothing$):
+    \[
+    \Pr(A \cup B) = \Pr(A) + \Pr(B)
+    \]
+    \item For an infinite collection of mutually exclusive events $A_1, A_2, \dots$:
+    \[
+    \Pr\left(\bigcup_i A_i\right) = \sum_i \Pr(A_i)
+    \]
+\end{enumerate}
+
+\section*{Corollary from Probability Axioms}
+
+\paragraph{Corollary 2.1}
+For a finite number $M$ of mutually exclusive events $A_1, A_2, \dots, A_M$:
+\[
+\Pr\left(\bigcup_i A_i\right) = \sum_i \Pr(A_i)
+\]
+
+\section*{Propositions from Probability Axioms}
+
+\paragraph{Proposition 2.1 (Complement Rule)}
+\[
+\Pr(A^c) = 1 - \Pr(A)
+\]
+
+\paragraph{Proposition 2.2 (Monotonicity)}
+If $A \subseteq B$, then:
+\[
+\Pr(A) \leq \Pr(B)
+\]
+
+\paragraph{Proposition 2.3 (Addition Rule)}
+\[
+\Pr(A \cup B) = \Pr(A) + \Pr(B) - \Pr(A \cap B)
+\]
+
+\paragraph{Proposition 2.4 (Inclusion--Exclusion Principle)}
+\[
+\Pr\left(\bigcup_{i=1}^M A_i\right)
+= \sum_i \Pr(A_i)
+- \sum_{i<j} \Pr(A_i \cap A_j)
++ \sum_{i<j<k} \Pr(A_i \cap A_j \cap A_k)
+- \cdots
++ (-1)^{M+1} \Pr\left(\bigcap_{i=1}^M A_i\right)
+\]
+
+\section*{Assigning Probabilities}
+
+\subsection*{Classical Approach}
+Assumes all outcomes in the sample space are equally likely.
+
+\textbf{Examples:}
+\begin{itemize}
+    \item Coin flip
+    \item Dice roll
+    \item Pair of dice
+\end{itemize}
+
+\[
+\Pr(\text{Event}) = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}}
+\]
+
+\subsection*{Relative Frequency Approach}
+\[
+\Pr(A) \approx \frac{n_A}{n}
+\]
+where $n$ is the total number of trials and $n_A$ is the number of times $A$ occurs.
+
+\section*{Joint Probability}
+
+\paragraph{Definition}
+\[
+\Pr(A, B) = \Pr(A \cap B)
+\]
+
+\paragraph{Multiple Events}
+\[
+\Pr(A_1, A_2, \dots, A_M)
+\]
+
+\subsection*{Calculation Approaches}
+
+\paragraph{Relative Frequency}
+\[
+\Pr(A, B) = \lim_{n \to \infty} \frac{n_{AB}}{n}
+\]
+
+\subsection*{Example: Card Deck}
+
+\[
+\Pr(A) = \frac{26}{52}, \quad
+\Pr(B) = \frac{40}{52}, \quad
+\Pr(C) = \frac{13}{52}
+\]
+
+\[
+\Pr(A,B)=\frac{20}{52}, \quad
+\Pr(A,C)=\frac{13}{52}, \quad
+\Pr(B,C)=\frac{10}{52}
+\]
+
+\section*{Conditional Probability}
+
+\paragraph{Definition}
+\[
+\Pr(A \mid B) = \frac{\Pr(A \cap B)}{\Pr(B)}, \quad \Pr(B) > 0
+\]
+
+\paragraph{Product Rule}
+\[
+\Pr(A,B) = \Pr(A \mid B)\Pr(B)
+\]
+
+\paragraph{Chain Rule}
+\[
+\Pr(A_1,\dots,A_M)
+= \prod_{i=1}^{M} \Pr(A_i \mid A_1,\dots,A_{i-1})
+\]
+
+\subsection*{Example: Cards Without Replacement}
+
+\[
+\Pr(B \mid A) = \frac{12}{51}
+\]
+
+\subsection*{Poker Flush}
+
+\[
+\Pr(\text{Spade Flush})
+= \frac{13}{52}\cdot\frac{12}{51}\cdot\frac{11}{50}\cdot\frac{10}{49}\cdot\frac{9}{48}
+\]
+
+\[
+\Pr(\text{Any Flush}) = 4 \times \Pr(\text{Spade Flush})
+\]
+
+\subsection*{Missing Key Problem}
+
+\[
+\Pr(R \mid L^c) = \frac{0.4}{0.6} = \frac{2}{3}
+\]
+
+\end{document}
