@@ -1,0 +1,24 @@
+Generate a lecture scribe intended to serve as exam-oriented reference material for CSE 400: Fundamentals of Probability in Computing.
+
+The scribe must be a faithful reconstruction of Lecture 8 and is intended for revision for a closed-notes / reading-based exam.
+
+Use only the provided context (Lecture 8 slides and any attached textbook excerpts). Do not introduce any material, notation, examples, explanations, or interpretations that are not present in the provided context.
+
+While writing the scribe, reason step by step through all definitions, assumptions, properties, theorem statements, proofs, derivations, and worked examples exactly as they appear in the lecture materials. Make the logical flow explicit so that a student can follow the reasoning during exam revision.
+
+Include:
+• Definitions and notation
+• Assumptions and conditions
+• Statements of results or properties
+• Step-by-step derivations or proofs where they appear in the lecture
+• Worked examples with intermediate steps, only if they are explicitly presented in the lecture
+
+Follow the structure and ordering of the lecture. Organize the scribe using clear section headings corresponding to the lecture topics.
+
+Do not:
+• Add new examples or problems
+• Add intuition or explanatory commentary beyond what is in the lecture
+• Simplify, paraphrase creatively, or restructure content beyond the lecture’s scope
+• Use external knowledge or textbook material not included in the context
+
+Prioritise correctness, completeness, and faithfulness to the lecture materials.
