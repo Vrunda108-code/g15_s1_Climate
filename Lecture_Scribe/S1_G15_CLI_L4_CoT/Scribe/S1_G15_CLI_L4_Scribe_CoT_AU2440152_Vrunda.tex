@@ -1,0 +1,390 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\section*{CSE 400: Fundamentals of Probability in Computing}
+
+\subsection*{Lecture 4: Joint \& Conditional Probability}
+
+\hrule
+
+\subsection*{1. Lecture Overview}
+
+\textbf{Lecture Title:} Joint \& Conditional Probability
+
+This lecture introduces:
+
+\begin{itemize}
+\item Joint probability distributions of discrete random variables
+\item Marginal probability distributions
+\item Conditional probability mass functions
+\item Independence of random variables
+\item Bayes’ Rule
+\item Law of Total Probability
+\end{itemize}
+
+\subsection*{2. Random Variables (Setup)}
+
+Let:
+
+\begin{itemize}
+\item ( X ) and ( Y ) be \textbf{discrete random variables}
+\end{itemize}
+
+Assume:
+
+\begin{itemize}
+\item ( X ) takes values in the set ( $\mathcal{X}$ )
+\item ( Y ) takes values in the set ( $\mathcal{Y}$ )
+\end{itemize}
+
+Each random variable maps outcomes of the sample space to real numbers.
+
+\subsection*{3. Joint Probability Mass Function (Joint PMF)}
+
+\subsubsection*{Definition}
+
+The \textbf{joint probability mass function} of discrete random variables ( X ) and ( Y ) is defined as:
+
+\[
+p_{X,Y}(x,y) = \Pr(X = x \text{ and } Y = y)
+\]
+
+for all:
+\[
+x \in \mathcal{X}, \quad y \in \mathcal{Y}
+\]
+
+\subsubsection*{Properties of the Joint PMF}
+
+1. \textbf{Non-negativity}
+\[
+p_{X,Y}(x,y) \ge 0 \quad \forall x,y
+\]
+
+2. \textbf{Normalization}
+\[
+\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x,y) = 1
+\]
+
+\subsection*{4. Joint Distribution Table}
+
+A \textbf{joint distribution} of two discrete random variables may be represented in tabular form:
+
+\begin{itemize}
+\item Rows correspond to values of ( X )
+\item Columns correspond to values of ( Y )
+\item Each cell contains ( $p_{X,Y}(x,y)$ )
+\end{itemize}
+
+The sum of all entries in the table equals \textbf{1}.
+
+\subsection*{5. Marginal Probability Mass Functions}
+
+\subsubsection*{Marginal PMF of ( X )}
+
+The \textbf{marginal probability mass function} of ( X ) is obtained by summing the joint PMF over all values of ( Y ):
+
+\[
+p_X(x) = \sum_{y \in \mathcal{Y}} p_{X,Y}(x,y)
+\]
+
+\subsubsection*{Marginal PMF of ( Y )}
+
+Similarly, the marginal PMF of ( Y ) is:
+
+\[
+p_Y(y) = \sum_{x \in \mathcal{X}} p_{X,Y}(x,y)
+\]
+
+\subsubsection*{Properties of Marginals}
+
+\[
+\sum_x p_X(x) = 1, \quad \sum_y p_Y(y) = 1
+\]
+
+Marginal distributions describe the probability behavior of one random variable independent of the other.
+
+\subsection*{6. Example: Joint and Marginal Distribution}
+
+\textit{(As shown in the lecture slides)}
+
+Given a joint PMF table:
+
+\begin{itemize}
+\item ( $p_X(x)$ ) is computed by summing across rows
+\item ( $p_Y(y)$ ) is computed by summing down columns
+\end{itemize}
+
+All intermediate summation steps are shown explicitly in the lecture.
+
+\subsection*{7. Conditional Probability Mass Function}
+
+Let ( X ) and ( Y ) be discrete random variables with joint PMF ( $p_{X,Y}(x,y)$ ).
+
+Assume:
+\[
+p_Y(y) > 0
+\]
+
+\subsubsection*{Conditional PMF of ( X ) Given ( Y = y )}
+
+\[
+p_{X|Y}(x \mid y) = \Pr(X = x \mid Y = y)
+\]
+
+\[
+= \frac{p_{X,Y}(x,y)}{p_Y(y)}
+\]
+
+for all ( $x \in \mathcal{X}$ ) such that ( $p_Y(y) > 0$ ).
+
+\subsubsection*{Properties}
+
+1. \textbf{Non-negativity}
+\[
+p_{X|Y}(x \mid y) \ge 0
+\]
+
+2. \textbf{Normalization}
+\[
+\sum_{x \in \mathcal{X}} p_{X|Y}(x \mid y) = 1
+\]
+
+\subsubsection*{Conditional PMF of ( Y ) Given ( X = x )}
+
+Assume:
+\[
+p_X(x) > 0
+\]
+
+\[
+p_{Y|X}(y \mid x) = \frac{p_{X,Y}(x,y)}{p_X(x)}
+\]
+
+\subsection*{8. Relationship Between Joint, Marginal, and Conditional PMFs}
+
+From the definition of conditional probability:
+
+\[
+p_{X,Y}(x,y) = p_{X|Y}(x \mid y), p_Y(y)
+\]
+
+Similarly,
+
+\[
+p_{X,Y}(x,y) = p_{Y|X}(y \mid x), p_X(x)
+\]
+
+\subsubsection*{Consistency Check}
+
+\[
+\sum_x p_{X,Y}(x,y)
+= \sum_x p_{X|Y}(x \mid y), p_Y(y)
+\]
+
+\[
+= p_Y(y) \sum_x p_{X|Y}(x \mid y)
+= p_Y(y)
+\]
+
+\subsection*{9. Example: Conditional Probability Computation}
+
+\textit{(As presented in the lecture)}
+
+Steps:
+
+\begin{enumerate}
+\item Compute ( $p_Y(y)$ )
+\item Use
+\[
+p_{X|Y}(x \mid y) = \frac{p_{X,Y}(x,y)}{p_Y(y)}
+\]
+\item Verify normalization
+\end{enumerate}
+
+All numerical steps are shown explicitly in the slides.
+
+\subsection*{10. Independence of Random Variables}
+
+\subsubsection*{Definition}
+
+Discrete random variables ( X ) and ( Y ) are \textbf{independent} if:
+
+\[
+p_{X,Y}(x,y) = p_X(x), p_Y(y)
+\]
+
+for all ( $x \in \mathcal{X}$ ), ( $y \in \mathcal{Y}$ ).
+
+\subsubsection*{Equivalent Conditional Characterization}
+
+If ( X ) and ( Y ) are independent:
+
+\[
+p_{X|Y}(x \mid y) = p_X(x)
+\]
+
+\[
+p_{Y|X}(y \mid x) = p_Y(y)
+\]
+
+whenever the conditioning probability is positive.
+
+\subsection*{11. Example: Checking Independence}
+
+\textit{(As shown in the lecture)}
+
+Steps:
+
+\begin{enumerate}
+\item Compute ( $p_X(x)$ ) and ( $p_Y(y)$ )
+\item Compute products ( $p_X(x)p_Y(y)$ )
+\item Compare with ( $p_{X,Y}(x,y)$ )
+\end{enumerate}
+
+If equality holds for all entries $\rightarrow$ independent
+
+Otherwise $\rightarrow$ dependent
+
+\subsection*{12. Bayes’ Rule}
+
+Assume:
+\[
+p_X(x) > 0, \quad p_Y(y) > 0
+\]
+
+\subsubsection*{Statement}
+
+\[
+p_{X|Y}(x \mid y)
+= \frac{p_{Y|X}(y \mid x), p_X(x)}{p_Y(y)}
+\]
+
+\subsubsection*{Derivation}
+
+From joint probability:
+\[
+p_{X,Y}(x,y) = p_{X|Y}(x \mid y), p_Y(y)
+\]
+
+\[
+p_{X,Y}(x,y) = p_{Y|X}(y \mid x), p_X(x)
+\]
+
+Equating:
+\[
+p_{X|Y}(x \mid y), p_Y(y)
+= p_{Y|X}(y \mid x), p_X(x)
+\]
+
+Dividing by ( $p_Y(y)$ ):
+
+\[
+p_{X|Y}(x \mid y)
+= \frac{p_{Y|X}(y \mid x), p_X(x)}{p_Y(y)}
+\]
+
+\subsection*{13. Example: Bayes’ Rule Application}
+
+\textit{(As presented in the lecture)}
+
+Steps:
+
+\begin{enumerate}
+\item Identify ( $p_{Y|X}(y \mid x)$ )
+\item Identify ( $p_X(x)$ )
+\item Compute ( $p_Y(y)$ ) via marginalization
+\item Substitute into Bayes’ Rule
+\end{enumerate}
+
+All intermediate computations are shown in the slides.
+
+\subsection*{14. Law of Total Probability}
+
+Assume:
+\[
+p_Y(y) > 0 \quad \forall y \in \mathcal{Y}
+\]
+
+\subsubsection*{Statement}
+
+\[
+p_X(x) = \sum_{y \in \mathcal{Y}} p_{X|Y}(x \mid y), p_Y(y)
+\]
+
+\subsubsection*{Derivation}
+
+Start from marginal probability:
+\[
+p_X(x) = \sum_y p_{X,Y}(x,y)
+\]
+
+Substitute:
+\[
+p_{X,Y}(x,y) = p_{X|Y}(x \mid y), p_Y(y)
+\]
+
+Thus:
+\[
+p_X(x) = \sum_y p_{X|Y}(x \mid y), p_Y(y)
+\]
+
+\subsubsection*{Symmetric Form}
+
+Assuming:
+\[
+p_X(x) > 0
+\]
+
+\[
+p_Y(y) = \sum_{x \in \mathcal{X}} p_{Y|X}(y \mid x), p_X(x)
+\]
+
+\subsection*{15. Example: Law of Total Probability}
+
+\textit{(As shown in the lecture)}
+
+\begin{itemize}
+\item Conditional probabilities are given
+\item Marginal probabilities are substituted
+\item Summation is computed term-by-term
+\end{itemize}
+
+All intermediate values are shown explicitly.
+
+\subsection*{16. Summary of Core Identities}
+
+1. \textbf{Joint from conditional}
+\[
+p_{X,Y}(x,y) = p_{X|Y}(x \mid y), p_Y(y)
+\]
+
+2. \textbf{Bayes’ Rule}
+\[
+p_{X|Y}(x \mid y)
+= \frac{p_{Y|X}(y \mid x), p_X(x)}{p_Y(y)}
+\]
+
+3. \textbf{Law of Total Probability}
+\[
+p_X(x) = \sum_y p_{X|Y}(x \mid y), p_Y(y)
+\]
+
+\subsection*{17. End of Lecture 4}
+
+This lecture covers:
+
+\begin{itemize}
+\item Joint PMFs
+\item Marginal PMFs
+\item Conditional PMFs
+\item Independence
+\item Bayes’ Rule
+\item Law of Total Probability
+\end{itemize}
+
+\end{document}
