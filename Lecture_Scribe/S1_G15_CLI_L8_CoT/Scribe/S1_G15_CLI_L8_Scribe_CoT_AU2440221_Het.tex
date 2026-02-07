@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\setstretch{1.2}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\title{\textbf{CSE400 – Fundamentals of Probability in Computing}\\
+Lecture 8: Gaussian, Uniform, Exponential, and Gamma Random Variables}
+\author{Instructor: Dhaval Patel, PhD}
+\date{January 29, 2026}
+
+\begin{document}
+
+\maketitle
+\hrule
+\vspace{1em}
+
+\section{Gaussian Random Variable: Definition and Properties}
+
+\textbf{Definition}
+
+A Gaussian (Normal) random variable is a continuous random variable whose
+probability density function (PDF) is given by:
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right)
+\]
+
+where:
+\begin{itemize}
+\item $\mu$ is the mean (location parameter),
+\item $\sigma^2$ is the variance (spread parameter),
+\item $\sigma$ is the standard deviation.
+\end{itemize}
+
+Notation:
+\[
+X \sim \mathcal{N}(\mu, \sigma^2)
+\]
+
+This PDF is symmetric about $x=\mu$, which implies equal probability mass on both
+sides of the mean.
+
+\textbf{Properties}
+\begin{itemize}
+\item Mean: $E[X] = \mu$
+\item Variance: $\text{Var}(X) = \sigma^2$
+\item Symmetry: The distribution is symmetric around the mean.
+\item Skewness: Zero (due to symmetry).
+\item Kurtosis: Fixed value characteristic of Gaussian distributions.
+\end{itemize}
+
+The cumulative distribution function (CDF) does not have a closed-form expression
+in elementary functions and is evaluated using special functions.
+
+\section{Gaussian Random Variable: Standard Forms}
+
+\subsection{Error Function (erf)}
+
+The error function is defined as:
+\[
+\text{erf}(x) = \frac{2}{\sqrt{\pi}} \int_{0}^{x} e^{-t^2} \, dt
+\]
+
+It arises naturally when integrating the Gaussian PDF.
+
+\subsection{Complementary Error Function (erfc)}
+
+The complementary error function is defined as:
+\[
+\text{erfc}(x) = 1 - \text{erf}(x)
+= \frac{2}{\sqrt{\pi}} \int_{x}^{\infty} e^{-t^2} \, dt
+\]
+
+This function is useful for tail probability calculations.
+
+\subsection{$\Phi$-function (Standard Normal CDF)}
+
+Let $Z \sim \mathcal{N}(0,1)$.  
+The CDF of a standard normal random variable is:
+\[
+\Phi(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{x} e^{-t^2/2} \, dt
+\]
+
+\subsection{Q-function (Gaussian Tail Function)}
+
+The Q-function is defined as:
+\[
+Q(x) = \frac{1}{\sqrt{2\pi}} \int_{x}^{\infty} e^{-t^2/2} \, dt
+\]
+
+It represents the right-tail probability of a standard Gaussian random variable.
+
+\textbf{Key Identity}
+\[
+Q(x) = 1 - \Phi(x)
+\]
+
+\section{Relation Between $\Phi$-function and Q-function}
+
+For a general Gaussian random variable $X \sim \mathcal{N}(\mu,\sigma^2)$, the CDF
+is evaluated by standardization:
+\[
+F_X(x) = \Pr(X \le x) = \Phi\left(\frac{x-\mu}{\sigma}\right)
+\]
+
+This step converts $X$ into a standard normal variable.
+
+\textbf{Evaluating Tail Probabilities}
+\[
+\Pr(X > x) = Q\left(\frac{x-\mu}{\sigma}\right)
+\]
+
+\textbf{Key Identities}
+\[
+F_X(x) = 1 - Q\left(\frac{x-\mu}{\sigma}\right)
+\]
+
+\textbf{Interpretation}
+\begin{itemize}
+\item $\Phi(x)$: Area under the left tail of the Gaussian curve.
+\item $Q(x)$: Area under the right tail of the Gaussian curve.
+\end{itemize}
+
+\section{Gaussian Random Variable: Example}
+
+Given a random variable $X$ with PDF:
+\[
+f_X(x) = \frac{1}{\sqrt{8\pi}} e^{-x^2/8}
+\]
+
+By comparison with the standard Gaussian form, the parameters $\mu$ and
+$\sigma^2$ are identified.
+
+\textbf{Required Probabilities}
+\begin{itemize}
+\item $\Pr(X < 0)$ expressed using the $\Phi$-function.
+\item $\Pr(X > 4)$ expressed using the $Q$-function.
+\item $\Pr(|X+3| < 2)$ converted into an interval probability.
+\item $\Pr(|X-2| > 1)$ converted into tail probabilities.
+\end{itemize}
+
+\textbf{Hint from lecture}
+\begin{itemize}
+\item Use $Q(x)$ for right-tail probabilities.
+\item Use $\Phi(x)$ for left-tail probabilities.
+\end{itemize}
+
+\section{Applications of Gaussian Random Variables}
+
+Gaussian models arise naturally in many engineering and computing contexts:
+\begin{itemize}
+\item Thermal noise in electronic circuits.
+\item Measurement errors in sensors:
+\[
+\text{Measured Value} = \text{True Value} + \text{Gaussian Noise}
+\]
+\item Packet delay variation (jitter) in communication networks.
+\end{itemize}
+
+\section{Problem Solving: CDF Analysis Exercise}
+
+Given CDF:
+\[
+F_X(x) =
+\begin{cases}
+0, & x < 0 \\
+2x, & 0 < x < 1 \\
+1, & x > 1
+\end{cases}
+\]
+
+\textbf{Step 1: Find the PDF}
+\[
+f_X(x) = \frac{d}{dx} F_X(x) = 2x, \quad 0 < x < 1
+\]
+
+\textbf{Step 2: Mean}
+\[
+\mu_X = \int_{0}^{1} x(2x)\,dx = \frac{2}{3}
+\]
+
+\textbf{Step 3: Variance}
+\[
+\sigma_X^2 = E[X^2] - (E[X])^2
+\]
+
+\textbf{Step 4: Skewness and Kurtosis}
+
+Derived from central moments.
+
+\textbf{Conclusion}
+
+The distribution is left-skewed and platykurtic.
+
+\section{Gaussian Modeling: From Noise to Math}
+
+Noise is modeled using a Gaussian random variable:
+\[
+X = \sigma Z + \mu, \quad Z \sim \mathcal{N}(0,1)
+\]
+
+This transformation maps standard randomness to a physical model.
+
+\textbf{Key Idea}
+
+Probability models the shape of uncertainty, not exact values.
+
+\section{Density Estimation: Learning from Data}
+
+In practice, the true $\mu$ and $\sigma$ are unknown.
+
+Observed data is represented as a histogram.
+
+The estimated PDF smooths noise into a predictive model.
+
+\textbf{Key Concept}
+
+We estimate probability distributions, not deterministic functions.
+
+\section{Applications: Network Systems}
+
+\textbf{Case Study: Packet Delay Modeling}
+
+500 ICMP ping measurements show delay variation due to queuing and congestion.
+
+\textbf{Engineering Goals}
+\begin{itemize}
+\item Estimate typical delay (mean).
+\item Measure jitter (variance).
+\end{itemize}
+
+High jitter is more damaging to real-time video than constant delay.
+
+\section{Applications in Broader Computing Contexts}
+
+\begin{itemize}
+\item Image Processing: Gaussian priors for denoising.
+\item Cloud Systems: Tail latency modeling.
+\item IoT \& Robotics: Sensor fusion using probabilistic filters.
+\end{itemize}
+
+\textbf{Final Insight}
+
+Uncertainty is unavoidable and probability is the key tool to manage it.
+
+\end{document}
