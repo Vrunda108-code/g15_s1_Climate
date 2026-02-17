@@ -1,0 +1,490 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,geometry}
+\geometry{margin=1in}
+\begin{document}
+
+\section*{CSE400: Fundamentals of Probability in Computing}
+
+\subsection*{Lecture 12 — Transformation of Random Variables}
+
+\hrulefill
+
+\section*{Slide 1 — Lecture Title}
+
+\subsection*{Transformation of Random Variables}
+
+Given:
+
+\begin{itemize}
+\item Continuous Random Variable (CRV) (X)
+\item Known PDF (f\_X(x)) and CDF (F\_X(x))
+\item New Random Variable:
+\end{itemize}
+
+$$
+Y = g(X)
+$$
+
+Goal:
+
+Find:
+
+$$
+f_Y(y), \quad F_Y(y)
+$$
+
+Also transformations:
+
+$$
+Z = g(X,Y)
+$$
+
+Examples shown:
+
+$$
+X+Y, \quad X-Y, \quad X/Y, \quad X \cdot Y
+$$
+
+\hrulefill
+
+\section*{Slide 2 — Outline}
+
+1. \textbf{Transformation of Random Variables}
+
+Learning of transformation techniques for random variables.
+
+2. \textbf{Function of Two Random Variables}
+
+Joint transformations and derived distributions.
+
+3. \textbf{Illustrative Example}
+
+Detailed derivation for:
+
+$$
+Z = X + Y
+$$
+
+\hrulefill
+
+\section*{Slide 3 — Transformation of RVs (Single Variable)}
+
+Assume:
+
+$$
+Y = g(X)
+$$
+
+where (g(\cdot)) is monotonic and invertible.
+
+\subsection*{Step-1: CDF Method}
+
+$$
+F_Y(y) = P(Y \le y)
+$$
+
+Substitute:
+
+$$
+= P(g(X) \le y)
+$$
+
+Using inverse:
+
+$$
+= P(X \le g^{-1}(y))
+$$
+
+Therefore:
+
+$$
+F_Y(y) = F_X(g^{-1}(y))
+$$
+
+\hrulefill
+
+Differentiate:
+
+$$
+f_Y(y) = \frac{d}{dy} F_Y(y)
+$$
+
+$$
+= \frac{d}{dy} F_X(g^{-1}(y))
+$$
+
+Apply chain rule:
+
+$$
+f_Y(y)
+= f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y)
+$$
+
+Equivalently written:
+
+$$
+f_Y(y)
+= f_X(x) \left|\frac{dx}{dy}\right|_{x=g^{-1}(y)}
+$$
+
+\hrulefill
+
+\section*{Slide 4 — Transformation Cases}
+
+\subsection*{Case S1 (Monotone decreasing)}
+
+$$
+F_Y(y) = P(Y \le y)
+$$
+
+$$
+= P(X \ge g^{-1}(y))
+$$
+
+$$
+= 1 - F_X(g^{-1}(y))
+$$
+
+\hrulefill
+
+\subsection*{Case S2 — Differentiate}
+
+$$
+f_Y(y) = - f_X(g^{-1}(y)) \frac{d}{dy}[g^{-1}(y)]
+$$
+
+or
+
+$$
+f_Y(y)=\frac{f_X(x)}{|dy/dx|}\Big|_{x=g^{-1}(y)}
+$$
+
+(PDF of (X) is assumed known.)
+
+\hrulefill
+
+\subsection*{Case S3}
+
+Change limits according to transformation.
+
+\hrulefill
+
+\section*{Slide 5 — Example (Single RV Transformation)}
+
+Given:
+
+$$
+X \sim \text{Uniform}(-1,1)
+$$
+
+$$
+f_X(x)=
+\begin{cases}
+\frac12, & -1<x<1\\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+Transformation:
+
+$$
+Y=\sin\left(\frac{\pi X}{2}\right)
+$$
+
+\subsection*{Step-1: Inverse}
+
+$$
+x=\frac{2}{\pi}\sin^{-1}(y)
+$$
+
+\subsection*{Step-2: Derivative}
+
+$$
+\frac{dx}{dy}
+= \frac{2}{\pi}\frac{1}{\sqrt{1-y^2}}
+$$
+
+\subsection*{Step-3: PDF}
+
+$$
+f_Y(y)=f_X(x)\left|\frac{dx}{dy}\right|
+$$
+
+Substitute:
+
+$$
+=\frac12 \cdot \frac{2}{\pi}\frac{1}{\sqrt{1-y^2}}
+$$
+
+$$
+f_Y(y)=\frac{1}{\pi\sqrt{1-y^2}},\quad -1<y<1
+$$
+
+Limits shown:
+
+$$
+x=-1 \Rightarrow y=-1,\quad x=1 \Rightarrow y=1
+$$
+
+\hrulefill
+
+\section*{Slide 6 — Function of Two Random Variables}
+
+Let:
+
+$$
+Z=X+Y
+$$
+
+Tasks listed:
+
+1. Find PDF (f\_Z(z))
+
+2. If (X,Y) independent
+
+3. If (X,Y \sim N(0,1)), show:
+
+$$
+Z \sim N(0,2)
+$$
+
+4. If exponential RVs with parameter (\lambda), find (f\_Z(z))
+
+\hrulefill
+
+\section*{Slide 7 — CDF of Sum}
+
+$$
+F_Z(z)=P(Z\le z)
+$$
+
+$$
+= P(X+Y \le z)
+$$
+
+Using joint density:
+
+$$
+F_Z(z)=\iint_{x+y\le z} f_{XY}(x,y),dx,dy
+$$
+
+Integral form shown:
+
+$$
+\int_{-\infty}^{\infty}\int_{-\infty}^{z-y} f_{XY}(x,y),dx,dy
+$$
+
+\hrulefill
+
+\section*{Slide 8 — Leibnitz Rule}
+
+Let:
+
+$$
+G(z)=\int_{a(z)}^{b(z)} h(z,y),dy
+$$
+
+Then:
+
+$$
+\frac{dG(z)}{dz}
+= \frac{db(z)}{dz}h(z,b(z))
+
+* \frac{da(z)}{dz}h(z,a(z))
+
+- \int_{a(z)}^{b(z)}\frac{\partial}{\partial z}h(z,y),dy
+$$
+
+\hrulefill
+
+Differentiate CDF:
+
+$$
+f_Z(z)=\frac{d}{dz}F_Z(z)
+$$
+
+$$
+=\int_{-\infty}^{\infty} f_{XY}(z-y,y),dy
+$$
+
+Equivalent expression:
+
+$$
+f_Z(z)=\int_{-\infty}^{\infty} f_{XY}(x,z-x),dx
+$$
+
+(Result labelled (i) in slide.)
+
+\hrulefill
+
+\section*{Slide 10 — Convolution (Independent Case)}
+
+If (X) and (Y) independent:
+
+$$
+f_{XY}(x,y)=f_X(x)f_Y(y)
+$$
+
+Therefore:
+
+$$
+f_Z(z)=\int_{-\infty}^{\infty} f_X(x),f_Y(z-x),dx
+$$
+
+Named:
+
+\textbf{Convolution Integral}
+
+\subsection*{Gaussian Example}
+
+Given:
+
+$$
+X\sim N(0,1), \quad Y\sim N(0,1)
+$$
+
+$$
+f_X(x)=\frac{1}{\sqrt{2\pi}}e^{-x^2/2},\quad
+f_Y(y)=\frac{1}{\sqrt{2\pi}}e^{-y^2/2}
+$$
+
+Substitute into convolution:
+
+$$
+f_Z(z)=\int_{-\infty}^{\infty}
+\frac{1}{2\pi}
+e^{-(x^2+(z-x)^2)/2},dx
+$$
+
+\hrulefill
+
+\section*{Slide 11 — Completing Gaussian Result}
+
+Integral manipulation shown on slide:
+
+$$
+=\frac{1}{\sqrt{2\pi}\sqrt{2}}e^{-z^2/(2\cdot2)}
+$$
+
+Hence:
+
+$$
+Z \sim N(0,2)
+$$
+
+\hrulefill
+
+\section*{Slide 12 — Exponential RVs Example}
+
+Given:
+
+$$
+f_X(x)=\lambda e^{-\lambda x},\quad x>0
+$$
+
+$$
+f_Y(y)=\lambda e^{-\lambda y},\quad y>0
+$$
+
+Use convolution:
+
+$$
+f_Z(z)=\int_{-\infty}^{\infty} f_X(x)f_Y(z-x),dx
+$$
+
+Substitute:
+
+$$
+=\int_0^z \lambda e^{-\lambda x}\cdot \lambda e^{-\lambda(z-x)}dx
+$$
+
+$$
+=\lambda^2 e^{-\lambda z}\int_0^z dx
+$$
+
+$$
+=\lambda^2 z e^{-\lambda z},\quad z>0
+$$
+
+Otherwise:
+
+$$
+0
+$$
+
+\hrulefill
+
+\section*{Slide 13 — Difference of RVs}
+
+Example:
+
+$$
+Z=X-Y
+$$
+
+CDF:
+
+$$
+F_Z(z)=P(Z\le z)=P(X-Y\le z)
+$$
+
+Integral form shown:
+
+$$
+\iint f_{XY}(x,y),dx,dy
+$$
+
+PDF obtained by:
+
+$$
+f_Z(z)=\frac{d}{dz}F_Z(z)
+$$
+
+Note written:
+
+Same procedure as (Z=X+Y).
+
+\hrulefill
+
+\section*{Slide 14 — Ratio and Radial Transformation}
+
+\subsection*{Ratio}
+
+$$
+Z=\frac{X}{Y}
+$$
+
+CDF setup:
+
+$$
+F_Z(z)=P\left(\frac{X}{Y}\le z\right)
+$$
+
+Cases indicated:
+
+\begin{itemize}
+\item (Y>0)
+\item (Y<0)
+\end{itemize}
+
+\hrulefill
+
+\subsection*{Radial Example}
+
+$$
+R=\sqrt{X^2+Y^2}
+$$
+
+Goal stated:
+
+$$
+f_R(r)=?
+$$
+
+(No further derivation shown on slide.)
+
+\hrulefill
+
+\section*{End of Lecture 12 Scribe}
+
+\end{document}

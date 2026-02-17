@@ -1,0 +1,19 @@
+Generate a lecture scribe intended to serve as exam-oriented reference material for CSE 400: Fundamentals of Probability in Computing, Lecture 12.
+
+Use ONLY the provided context (Lecture 12 PPT). Do not use any CP questions or any material not explicitly present in the lecture slides or the relevant textbook sections covered in this lecture.
+
+The scribe must strictly follow the lecture’s structure, scope, notation, slide order, and sequence exactly as presented in the PPT. Prioritize correctness and faithfulness to the lecture content. Do not invent definitions, results, proofs, examples, explanations, intuition, or interpretations that are not explicitly present in the slides.
+
+While writing the scribe, reason step by step through all definitions, assumptions, theorem statements, proofs, derivations, and worked examples exactly as shown in the lecture slides. Make every logical and algebraic step explicit if it appears in the slides, so the document can be reliably used for closed-notes exam revision.
+
+Include:
+- All slide titles and section headings in order
+- All definitions and notation introduced
+- All stated assumptions and conditions
+- All theorems or results exactly as written
+- Step-by-step proofs or derivations where they appear
+- Worked examples with all intermediate steps, only if they are part of the lecture
+
+Do not simplify, reinterpret, summarize, compress, or add explanations beyond what is explicitly covered in the slides. Do not introduce new examples or alternative solution methods.
+
+Organize the scribe clearly using structured section headings corresponding to the lecture slides so that a student studying only this document can accurately revise Lecture 12 for an exam.
