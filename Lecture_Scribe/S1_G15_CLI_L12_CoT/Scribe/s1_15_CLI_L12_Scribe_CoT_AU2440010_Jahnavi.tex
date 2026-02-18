@@ -1,0 +1,315 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage[a4paper,margin=1in]{geometry}
+
+\begin{document}
+
+\title{CSE400 — Fundamentals of Probability in Computing\\
+Lecture L11/L12: Transformation of Random Variables}
+\date{February 10–12, 2026}
+\maketitle
+
+\section*{Outline (as given)}
+
+Transformation of Random Variables\\
+Learning transformation techniques for random variables.
+
+Function of Two Random Variables\\
+Joint transformations and derived distributions.
+
+Illustrative Example\\
+Detailed derivation for the case:
+\[
+Z = X + Y
+\]
+
+L12\_S1\_A (2)
+
+\section*{1. Transformation of a Single Random Variable}
+
+Let $X$ be a known random variable with known PDF.
+
+Let a new random variable be defined as
+\[
+Y = g(X)
+\]
+
+The goal is to find:
+
+CDF of $Y$:
+\[
+F_Y(y)
+\]
+
+PDF of $Y$:
+\[
+f_Y(y)
+\]
+
+\subsection*{Step-by-Step Method (as presented)}
+
+\textbf{Step 1 — Start from the CDF definition}
+\[
+F_Y(y)=\Pr(Y\le y)
+\]
+
+\textbf{Step 2 — Substitute $Y=g(X)$}
+\[
+F_Y(y)=\Pr(g(X)\le y)
+\]
+
+\textbf{Step 3 — Convert inequality into an equivalent condition on $X$}
+
+This produces an interval (or union of intervals) in terms of $X$:
+\[
+=\Pr(X\in \text{corresponding region})
+\]
+
+\textbf{Step 4 — Express using the CDF of $X$}
+\[
+F_Y(y)=F_X(\text{boundary})
+\]
+
+or equivalently
+\[
+F_Y(y)=1-F_X(\text{boundary})
+\]
+
+depending on monotonicity.
+
+\textbf{Step 5 — Differentiate to obtain the PDF}
+\[
+f_Y(y)=\frac{d}{dy}F_Y(y)
+\]
+
+This yields the required PDF of $Y$.
+
+These steps are explicitly shown in the slides as:
+
+Write CDF of $Y$
+
+Replace $Y$ by function of $X$
+
+Convert probability to $X$-domain
+
+Use known CDF/PDF of $X$
+
+Differentiate to obtain $f_Y(y)$
+
+L12\_S1\_A (2)
+
+\section*{Worked Example 1 (Single RV)}
+
+Given
+
+$X$ is uniformly distributed on $(-1,1)$
+
+Hence,
+\[
+f_X(x)=\frac{1}{2},\quad -1<x<1
+\]
+
+Define
+\[
+Y=\sin(\pi X)
+\]
+
+Required
+
+Find the PDF of $Y$.
+
+\subsection*{Solution (exact lecture flow)}
+
+\textbf{Step 1 — Start with CDF of $Y$}
+\[
+F_Y(y)=\Pr(Y\le y)
+\]
+
+\textbf{Step 2 — Substitute transformation}
+\[
+=\Pr(\sin(\pi X)\le y)
+\]
+
+\textbf{Step 3 — Convert inequality to bounds on $X$}
+
+This produces inverse–sine type limits on $X$ (shown graphically/analytically in slides).
+
+\textbf{Step 4 — Use PDF of uniform $X$}
+
+Since
+\[
+f_X(x)=\frac{1}{2}
+\]
+
+the probability becomes an integral over the corresponding $X$-interval.
+
+\textbf{Step 5 — Differentiate CDF to obtain PDF}
+
+Final result (as written in slides):
+\[
+f_Y(y)=\frac{1}{\pi\sqrt{1-y^2}},\quad |y|<1
+\]
+
+and
+\[
+f_Y(y)=0 \text{ otherwise.}
+\]
+
+L12\_S1\_A (2)
+
+\section*{2. Function of Two Random Variables}
+
+Let two random variables $X,Y$ be given.
+
+Define a new RV:
+\[
+Z=g(X,Y)
+\]
+
+Goal: find CDF/PDF of $Z$.
+
+\subsection*{General Definition}
+
+\[
+F_Z(z)=\Pr(Z\le z)=\Pr(g(X,Y)\le z)
+\]
+
+This is evaluated by integrating the joint PDF over the appropriate region:
+\[
+F_Z(z)=\iint_{g(x,y)\le z} f_{X,Y}(x,y)\,dx\,dy
+\]
+
+L12\_S1\_A (2)
+
+\section*{Illustrative Example: $Z=X+Y$}
+
+\textbf{Step 1 — Write CDF}
+\[
+F_Z(z)=\Pr(X+Y\le z)
+\]
+
+\textbf{Step 2 — Convert to double integral}
+\[
+F_Z(z)=\iint_{x+y\le z} f_X(x)f_Y(y)\,dx\,dy
+\]
+
+(Independence is assumed in the lecture examples.)
+
+\textbf{Step 3 — Express limits explicitly}
+\[
+=\int_{-\infty}^{\infty}\int_{-\infty}^{z-x} f_X(x)f_Y(y)\,dy\,dx
+\]
+
+\textbf{Step 4 — Differentiate to obtain PDF}
+
+Using Leibniz rule for differentiation under the integral sign (explicitly shown):
+
+If
+\[
+G(z)=\int h(x,z)\,dx
+\]
+
+then
+\[
+\frac{d}{dz}G(z)=\int \frac{\partial}{\partial z}h(x,z)\,dx
+\]
+
+Applying this,
+\[
+f_Z(z)=\frac{d}{dz}F_Z(z)
+\]
+
+leads to the convolution form:
+\[
+f_Z(z)=\int_{-\infty}^{\infty} f_X(x)f_Y(z-x)\,dx
+\]
+
+L12\_S1\_A (2)
+
+\section*{Example: Exponential Random Variables}
+
+Given:
+
+$X,Y$ are exponential RVs
+
+PDFs shown in slides as:
+\[
+f_X(x)=\lambda e^{-\lambda x},\quad x\ge0
+\]
+\[
+f_Y(y)=\lambda e^{-\lambda y},\quad y\ge0
+\]
+
+Define:
+\[
+Z=X+Y
+\]
+
+Using convolution:
+\[
+f_Z(z)=\int_0^z \lambda e^{-\lambda x}\lambda e^{-\lambda(z-x)}\,dx
+\]
+
+Step-by-step (as written)
+
+Substitute PDFs
+
+Combine exponentials
+
+Take constants outside
+
+Integrate over $x$ from $0$ to $z$
+
+Final expression in slides:
+\[
+f_Z(z)=\lambda^2 z e^{-\lambda z},\quad z\ge0
+\]
+
+and
+\[
+f_Z(z)=0 \text{ otherwise.}
+\]
+
+L12\_S1\_A (2)
+
+\section*{Additional Slide Examples (listed)}
+
+Linear combinations such as:
+\[
+Z=X-2Y
+\]
+
+CDF written as:
+\[
+F_Z(z)=\Pr(X-2Y\le z)
+\]
+
+and converted into joint-probability regions in the $x$-$y$ plane, following the same steps:
+
+Write CDF
+
+Express inequality
+
+Set integration region
+
+Integrate joint PDF
+
+L12\_S1\_A (2)
+
+\section*{Key Exam Takeaways (from slides)}
+
+Always start with CDF definition.
+
+Substitute transformation explicitly.
+
+Convert probability into integration region.
+
+Use known PDF(s).
+
+Apply Leibniz rule when differentiating integrals.
+
+For $Z=X+Y$, final PDF is obtained via convolution.
+
+For single-RV transformations, use CDF → differentiate.
+
+\end{document}
