@@ -1,0 +1,282 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\geometry{margin=1in}
+
+\title{Lecture Scribe Probability}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{CSE400 – Fundamentals of Probability in Computing}
+
+\textbf{Lecture L11–L12: Transformation of Random Variables} \\
+Prof. Dhaval Patel, PhD \\
+Associate Professor, Computer Science and Engineering \\
+SEAS – Ahmedabad University \\
+Date: February 10–12, 2026
+
+\section*{Outline}
+
+\begin{enumerate}
+    \item Transformation of Random Variables \\
+    Learning transformation techniques for random variables.
+    
+    \item Function of Two Random Variables \\
+    Joint transformations and derived distributions.
+    
+    \item Illustrative Example \\
+    Detailed derivation for the case.
+\end{enumerate}
+
+\newpage
+
+\section*{1️⃣ Transformation of Random Variables}
+
+We consider a transformation:
+
+\[
+Y = g(X)
+\]
+
+Our goal is to find the distribution (CDF and PDF) of $Y$, given that the distribution of $X$ is known.
+
+\subsection*{Step–V: CDF of $Y$}
+
+From the slide:
+
+\[
+F_Y(y) = P(Y \le y)
+\]
+
+Since $Y = g(X)$,
+
+\[
+F_Y(y) = P(g(X) \le y)
+\]
+
+The probability is rewritten in terms of $X$, because the PDF of $X$ is known.
+
+The slide shows transformation using:
+
+\[
+F_Y(y) = 1 - F_X(\cdot)
+\]
+
+depending on the monotonicity of the function.
+
+Thus the method used in the slides:
+
+\begin{enumerate}
+    \item Express event $Y \le y$
+    \item Rewrite in terms of $X$
+    \item Use known CDF of $X$
+    \item Differentiate to get PDF of $Y$
+\end{enumerate}
+
+Finally:
+
+\[
+f_Y(y) = \frac{d}{dy} F_Y(y)
+\]
+
+\newpage
+
+\section*{2️⃣ Example: Uniform Random Variable}
+
+Given:
+
+\[
+X \sim \text{Uniform}(-1,1)
+\]
+
+\[
+f_X(x) = \frac{1}{2}, \quad -1 < x < 1
+\]
+
+Find:
+
+\[
+Y = g(X) = \sin\left(\frac{\pi}{2}X\right)
+\]
+
+\subsection*{Step 1: Define transformation}
+
+\[
+F_Y(y) = P(Y \le y)
+\]
+
+\[
+= P\left(\sin\left(\frac{\pi}{2}X\right) \le y\right)
+\]
+
+Rewrite inequality in terms of $X$, then use uniform PDF.
+
+Final PDF (as shown in slide):
+
+\[
+f_Y(y) = \frac{1}{\pi \sqrt{1-y^2}}, \quad -1 < y < 1
+\]
+
+This result comes from differentiating the transformed CDF and using the Jacobian term that appears after inversion.
+
+\newpage
+
+\section*{3️⃣ Function of Two Random Variables}
+
+Now consider:
+
+\[
+Z = g(X,Y)
+\]
+
+Case:
+
+\[
+Z = X + Y
+\]
+
+We start with CDF:
+
+\[
+F_Z(z) = P(Z \le z)
+\]
+
+\[
+= P(X + Y \le z)
+\]
+
+This defines a region in the $(x,y)$-plane.
+
+Thus:
+
+\[
+F_Z(z) = \iint_{x+y \le z} f_{X,Y}(x,y)\, dx\, dy
+\]
+
+If $X$ and $Y$ are independent:
+
+\[
+f_{X,Y}(x,y) = f_X(x) f_Y(y)
+\]
+
+To obtain PDF from CDF:
+
+\[
+f_Z(z) = \frac{d}{dz} F_Z(z)
+\]
+
+\subsection*{Leibniz Rule (Used in Slides)}
+
+If
+
+\[
+G(z) = \int_{a(z)}^{b(z)} h(x,z)\, dx
+\]
+
+then
+
+\[
+\frac{dG(z)}{dz}
+=
+h(b(z),z)\frac{db}{dz}
+-
+h(a(z),z)\frac{da}{dz}
++
+\int_{a(z)}^{b(z)} \frac{\partial h(x,z)}{\partial z}\, dx
+\]
+
+This rule is applied to differentiate the CDF integral.
+
+\newpage
+
+\section*{Convolution Result}
+
+After applying Leibniz rule and simplification:
+
+\[
+f_Z(z) = \int_{-\infty}^{\infty} f_X(x) f_Y(z-x)\, dx
+\]
+
+This is the convolution formula (as derived in slides).
+
+\section*{Example: Exponential Random Variables}
+
+Given independent RVs:
+
+\[
+f_X(x) = \lambda e^{-\lambda x}, \quad x \ge 0
+\]
+
+\[
+f_Y(y) = \lambda e^{-\lambda y}, \quad y \ge 0
+\]
+
+Find:
+
+\[
+Z = X + Y
+\]
+
+Using convolution:
+
+\[
+f_Z(z)
+=
+\int_0^z \lambda e^{-\lambda x}
+\lambda e^{-\lambda (z-x)} dx
+\]
+
+\[
+=
+\lambda^2 e^{-\lambda z} \int_0^z dx
+\]
+
+\[
+=
+\lambda^2 z e^{-\lambda z}
+\]
+
+This matches the derived expression in the slides.
+
+\section*{Additional Example}
+
+\[
+Z = X - Y
+\]
+
+Rewrite:
+
+\[
+F_Z(z) = P(X - Y \le z)
+\]
+
+\[
+= P(X \le z + Y)
+\]
+
+And integrate over joint PDF accordingly.
+
+\newpage
+
+\section*{Summary of Lecture Content}
+
+\begin{enumerate}
+    \item Transformation of single RV using CDF method
+    \item Deriving PDF via differentiation
+    \item Handling monotonic functions
+    \item Transformation of two RVs
+    \item Derivation of convolution formula
+    \item Application to:
+    \begin{itemize}
+        \item Uniform transformation
+        \item Sum of independent RVs
+        \item Exponential case
+        \item Difference case
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
