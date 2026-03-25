@@ -1,0 +1,679 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{center}
+
+{\fontsize{16}{18}\selectfont\textbf{CSE 400: Fundamentals of Probability in Computing}}
+
+\vspace{10pt}
+
+{\fontsize{14}{15}\selectfont\textbf{Lecture 20: Linear Transformations and Expectations of Multiple Random Variables}}
+
+\vspace{8pt}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+\section{Outline}
+
+\begin{itemize}
+\item \textbf{Statistical Representation of Random Vectors}
+\item \textbf{Mean Vector, Correlation, and Covariance Matrices}
+\item \textbf{Linear Transformations}
+\item \textbf{Mapping properties under $Y = AX + b$}
+\item \textbf{Multivariate Gaussian Distributions}
+\item \textbf{From 1D/2D cases to N-dimensional Joint PDFs}
+\item \textbf{Special Cases and Properties}
+\item \textbf{Implications of zero correlation and matrix factorization}
+\end{itemize}
+
+\hrule
+\vspace{0.5cm}
+
+\section{Random Vector Representation}
+
+\subsection{Vector Form of Multiple Random Variables}
+
+For random variables:
+
+$X_1, X_2, ..., X_N$
+
+We represent them as a vector:
+
+\[
+\boxed{X = [X_1, X_2, ..., X_N]^T}
+\]
+
+\subsubsection*{\textbf{Definition}}
+
+$X$ is called a \textbf{random vector}.
+
+\subsubsection*{\textbf{Properties}}
+
+\begin{itemize}
+\item \textbf{Provides a compact representation of multiple random variables.}
+\end{itemize}
+
+\section{Mean Vector}
+
+\subsection{Expectation of a Random Vector}
+
+\subsubsection*{\textbf{Mean Vector Definition}}
+
+The mean vector of $X$ is:
+
+\[
+\boxed{\mu_X = E[X]}
+\]
+
+\subsubsection*{\textbf{Interpretation}}
+
+\begin{itemize}
+\item \textbf{Represents the average value of the random vector.}
+\item \textbf{Each element corresponds to the mean of one random variable.}
+\end{itemize}
+
+\subsubsection*{\textbf{Structure}}
+
+\[
+\boxed{\mu_X = [E[X_1], E[X_2], ..., E[X_N]]^T}
+\]
+
+\section{Correlation Matrix}
+
+\subsection{Correlation Between Multiple Random Variables}
+
+\subsubsection*{\textbf{Definition}}
+
+\[
+\boxed{R_{XX} = E[XX^T]}
+\]
+
+Where:
+
+\[
+R_{XX}(i,j) = E[X_i X_j]
+\]
+
+\subsubsection*{\textbf{Matrix Representation}}
+
+\[
+R_{XX} =
+\begin{bmatrix}
+E[X_1X_1] & E[X_1X_2] & ... & E[X_1X_N] \\
+E[X_2X_1] & E[X_2X_2] & ... & E[X_2X_N] \\
+... & ... & ... & ... \\
+E[X_NX_1] & E[X_NX_2] & ... & E[X_NX_N]
+\end{bmatrix}
+\]
+
+\subsubsection*{\textbf{Property}}
+
+\textbf{$R_{XX}$ is a symmetric matrix.}
+
+\section{Covariance Matrix}
+
+\subsection{Definition}
+
+\[
+\boxed{C_{XX} = E[(X - \mu_X)(X - \mu_X)^T]}
+\]
+
+\subsubsection*{\textbf{Example Form}}
+
+\[
+C_{XX} =
+\begin{bmatrix}
+Var(X_1) & Cov(X_1,X_2) \\
+Cov(X_2,X_1) & Var(X_2)
+\end{bmatrix}
+\]
+
+\subsubsection*{\textbf{Property}}
+
+\[
+Cov(X_i,X_j) = Cov(X_j,X_i)
+\]
+
+\textbf{Thus the matrix is symmetric.}
+
+\section{Linear Transformation of Random Vectors}
+
+\subsection{Model}
+
+Consider the transformation:
+
+\[
+\boxed{Y = AX + b}
+\]
+
+Where:
+
+\begin{itemize}
+\item \textbf{$A$ : Transformation matrix}
+\item \textbf{$b$ : Constant vector}
+\item \textbf{$X$ : Input random vector}
+\end{itemize}
+
+\subsubsection*{\textbf{Interpretation}}
+
+\textbf{$A$ scales and rotates the data.}
+
+\textbf{$b$ shifts the center.}
+
+\subsubsection*{\textbf{Element-wise Representation}}
+
+\[
+Y_1 = a_{11}X_1 + a_{12}X_2 + ... + a_{1N}X_N + b_1
+\]
+
+\[
+Y_2 = a_{21}X_1 + a_{22}X_2 + ... + a_{2N}X_N + b_2
+\]
+
+...
+
+\[
+Y_N = a_{N1}X_1 + a_{N2}X_2 + ... + a_{NN}X_N + b_N
+\]
+
+\section{Mean of Transformed Vector}
+
+For $Y = AX + b$:
+
+\[
+\mu_Y = E[Y]
+\]
+
+\subsection{Derivation}
+
+Substitute $Y$:
+
+\[
+\mu_Y = E[AX + b]
+\]
+
+Apply linearity:
+
+\[
+\mu_Y = E[AX] + E[b]
+\]
+
+Since $b$ is constant:
+
+\[
+E[b] = b
+\]
+
+Thus:
+
+\[
+\boxed{\mathbf{\mu_Y = A\mu_X + b}}
+\]
+
+\section{Correlation Matrix Transformation}
+
+Definition:
+
+\[
+R_{YY} = E[YY^T]
+\]
+
+Substitute $Y = AX + b$:
+
+\[
+R_{YY} = E[(AX + b)(AX + b)^T]
+\]
+
+\subsection{Expansion}
+
+\[
+R_{YY} = E[AXX^TA^T + AXb^T + bX^TA^T + bb^T]
+\]
+
+\subsection{Applying Expectation}
+
+\[
+R_{YY} = AE[XX^T]A^T + AE[X]b^T + bE[X]^TA^T + bb^T
+\]
+
+\subsection{Final Result}
+
+\[
+\boxed{\mathbf{R_{YY} = AR_{XX}A^T + A\mu_Xb^T + b\mu_X^TA^T + bb^T}}
+\]
+
+\section{Covariance Matrix Transformation}
+
+Key observation:
+
+\[
+Y - \mu_Y = (AX + b) - (A\mu_X + b)
+\]
+
+\[
+Y - \mu_Y = A(X - \mu_X)
+\]
+
+\subsection{Derivation}
+
+\[
+C_{YY} = E[(Y - \mu_Y)(Y - \mu_Y)^T]
+\]
+
+Substitute:
+
+\[
+C_{YY} = E[A(X - \mu_X)(X - \mu_X)^TA^T]
+\]
+
+\subsection{Result}
+
+\[
+\boxed{\mathbf{C_{YY} = AC_{XX}A^T}}
+\]
+
+\subsection{Observation}
+
+\textbf{Shift $b$ does not affect covariance.}
+
+\section{Summary of Linear Transformation}
+
+If $Y = AX + b$:
+
+Mean:
+
+\[
+\boxed{\mathbf{\mu_Y = A\mu_X + b}}
+\]
+
+Covariance:
+
+\[
+\boxed{\mathbf{C_{YY} = AC_{XX}A^T}}
+\]
+
+Correlation:
+
+\[
+\boxed{\mathbf{R_{YY} = AR_{XX}A^T + A\mu_Xb^T + b\mu_X^TA^T + bb^T}}
+\]
+
+\section{Numerical Example}
+
+Given transformation:
+
+\[
+\boxed{Y = AX}
+\]
+
+Compute:
+
+\begin{itemize}
+\item \textbf{Mean vector of $Y$}
+\item \textbf{Correlation matrix of $Y$}
+\item \textbf{Covariance matrix of $Y$}
+\end{itemize}
+
+\section{Solution: Mean}
+
+\[
+\mu_Y = A\mu_X
+\]
+
+Example calculation:
+
+\[
+\mu_Y =
+\begin{bmatrix}
+1 & 0 & -1 \\
+0 & -1 & 1 \\
+-1 & 1 & 0
+\end{bmatrix}
+*
+\begin{bmatrix}
+2 \\ -1 \\ 1
+\end{bmatrix}
+\]
+
+Component calculations:
+
+1st element:
+
+\[
+(1)(2) + (0)(-1) + (-1)(1)
+\]
+
+2nd element:
+
+\[
+(0)(2) + (-1)(-1) + (1)(1)
+\]
+
+3rd element:
+
+\[
+(-1)(2) + (1)(-1) + (0)(1)
+\]
+
+Result:
+
+\[
+\boxed{\mathbf{
+\mu_Y =
+\begin{bmatrix}
+1 \\ 2 \\ -3
+\end{bmatrix}
+}}
+\]
+
+\section{Correlation Matrix Solution}
+
+Use:
+
+\[
+R_{YY} = AR_{XX}A^T
+\]
+
+Final:
+
+\[
+\boxed{\mathbf{
+R_{YY} =
+\begin{bmatrix}
+17 & -6 & -9 \\
+-6 & 14 & -8 \\
+-9 & -8 & 19
+\end{bmatrix}
+}}
+\]
+
+\section{Covariance Matrix Solution}
+
+Use relation:
+
+\[
+C_{YY} = R_{YY} - \mu_Y \mu_Y^T
+\]
+
+Outer Product:
+
+\[
+\mu_Y \mu_Y^T =
+\begin{bmatrix}
+1 & 2 & -3 \\
+2 & 4 & -6 \\
+-3 & -6 & 9
+\end{bmatrix}
+\]
+
+Subtract:
+
+\[
+C_{YY} =
+\begin{bmatrix}
+17 & -6 & -9 \\
+-6 & 14 & -8 \\
+-9 & -8 & 19
+\end{bmatrix}
+-
+\begin{bmatrix}
+1 & 2 & -3 \\
+2 & 4 & -6 \\
+-3 & -6 & 9
+\end{bmatrix}
+\]
+
+\[
+\boxed{\mathbf{C_{YY} \text{ Final covariance matrix obtained after subtraction.}}}
+\]
+
+\section{Homework Assignment}
+
+Given matrices $C_{XX}$ and $R_{XX}$.
+
+Find mean vector $\mu_X$.
+
+Relation:
+
+\[
+\boxed{C_{XX} = R_{XX} - \mu_X \mu_X^T}
+\]
+
+Rearrange:
+
+\[
+\boxed{\mu_X \mu_X^T = R_{XX} - C_{XX}}
+\]
+
+\textbf{Diagonal elements reveal components of $\mu_X$.}
+
+\section{Gaussian Distributions}
+
+\subsection{Univariate Gaussian}
+
+\[
+\boxed{
+f_X(x) =
+\left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)
+\exp\left( -\frac{(x - \mu)^2}{2\sigma^2} \right)
+}
+\]
+
+\subsection{Joint Gaussian (2D)}
+
+\[
+\boxed{
+f_{XY}(x,y) =
+\frac{1}{2\pi \sigma_x \sigma_y \sqrt{(1 - \rho^2)}}
+\exp\left(
+-\frac{1}{2(1-\rho^2)}
+\left[
+\frac{(x-\mu_x)^2}{\sigma_x^2}
+- \frac{2\rho(x-\mu_x)(y-\mu_y)}{\sigma_x\sigma_y}
++ \frac{(y-\mu_y)^2}{\sigma_y^2}
+\right]
+\right)
+}
+\]
+
+\section{Multivariate Gaussian Distribution}
+
+For random vector:
+
+\[
+X = [X_1, X_2, ..., X_N]^T
+\]
+
+\subsection{General PDF}
+
+\[
+\boxed{
+f_X(x) =
+\frac{1}{\sqrt{(2\pi)^N det(C_{XX})}}
+\exp\left(
+-\frac{1}{2}
+(x - \mu_X)^T
+C_{XX}^{-1}
+(x - \mu_X)
+\right)
+}
+\]
+
+\subsection{Components}
+
+\textbf{$\mu_X$ : Mean vector}
+
+\textbf{$C_{XX}$ : Covariance matrix}
+
+\section{Uncorrelated Gaussian Variables}
+
+If:
+
+\[
+Cov(X_i, X_j) = 0 \quad \text{for} \quad i \neq j
+\]
+
+Then covariance matrix becomes diagonal.
+
+Result:
+
+\[
+\boxed{f_X(x) = \prod f_{X_i}(x_i)}
+\]
+
+\textbf{Thus independent Gaussian components appear.}
+
+\section{Homework Proof}
+
+\[
+\boxed{\mathbf{Var[X + Y] = Var[X] + Var[Y] + 2Cov(X,Y)}}
+\]
+
+\section{Case Study: Smart City Traffic + Weather System}
+
+Random vector variables:
+
+$X_1$ : Traffic flow
+
+$X_2$ : Average speed
+
+$X_3$ : Rainfall intensity
+
+$X_4$ : Temperature
+
+$X_5$ : Air pollution index
+
+Thus:
+
+\[
+\boxed{X = [X_1, X_2, X_3, X_4, X_5]^T}
+\]
+
+\section{Mean Vector Example}
+
+Average values example:
+
+Traffic = 120
+
+Speed = 35
+
+Rainfall = 2
+
+Temperature = 32
+
+AQI = 180
+
+\[
+\boxed{\mu = E[X]}
+\]
+
+\section{Covariance Interpretation}
+
+Examples:
+
+\[
+Cov(X_1,X_3) > 0
+\]
+
+\textbf{Rain increases congestion}
+
+\[
+Cov(X_2,X_3) < 0
+\]
+
+\textbf{Rain reduces speed}
+
+\[
+Cov(X_1,X_5) > 0
+\]
+
+\textbf{Traffic increases pollution}
+
+\[
+Cov(X_4,X_5) < 0
+\]
+
+\textbf{Temperature disperses pollution}
+
+\section{Joint Gaussian Model}
+
+Assume:
+
+\[
+\boxed{X \sim N(\mu, \Sigma)}
+\]
+
+Reasons:
+
+\begin{itemize}
+\item \textbf{Aggregation of many small effects}
+\item \textbf{Sensor noise Gaussian}
+\item \textbf{Closed form analytics}
+\end{itemize}
+
+System defined by:
+
+\textbf{Mean $\rightarrow$ typical conditions}
+
+\textbf{Covariance $\rightarrow$ interdependencies}
+
+\section{Linear Transformation Example}
+
+Define congestion index:
+
+\[
+\boxed{Y = 0.6X_1 - 0.4X_2 + 0.8X_3}
+\]
+
+This is linear transformation:
+
+\[
+\boxed{Y = a^T X}
+\]
+
+If:
+
+\[
+X \sim N(\mu, \Sigma)
+\]
+
+Then:
+
+\textbf{$Y$ is Gaussian}
+
+Mean:
+
+\[
+\boxed{E[Y] = a^T \mu}
+\]
+
+Variance:
+
+\[
+\boxed{Var(Y) = a^T \Sigma a}
+\]
+
+\section{Key Takeaways}
+
+\begin{itemize}
+\item \textbf{Random vectors represent multiple variables.}
+\item \textbf{Mean and covariance describe system behavior.}
+\item \textbf{Linear transformations modify mean and covariance.}
+\item \textbf{Multivariate Gaussian models high-dimensional uncertainty.}
+\item \textbf{Uncorrelated Gaussian variables factorize into independent PDFs.}
+\end{itemize}
+
+\hrule
+\vspace{0.5cm}
+
+\textbf{End of Lecture 20 Scribe.}
+
+\end{document}
