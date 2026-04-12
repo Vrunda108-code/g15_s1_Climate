@@ -1,0 +1,320 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+
+\title{CSE400 -- Lecture 20 Scribe}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Linear Transformations and Expectations of Multiple Random Variables}
+
+\section*{1. Outline}
+\begin{itemize}
+\item Statistical Representation of Random Vectors
+\item Mean Vector, Correlation, and Covariance Matrices
+\item Linear Transformations
+\item Mapping properties under Multivariate Gaussian Distributions
+\item From 1D/2D cases to N-dimensional Joint PDFs
+\item Special Cases and Properties
+\item Implications of zero correlation and matrix factorization
+\end{itemize}
+
+\section*{2. Random Vector Representation}
+
+\[
+Y = AX + b
+\]
+
+\textbf{Definition}
+
+For random variables $X_1, X_2, \dots, X_N$, we represent them as:
+
+\[
+X =
+\begin{bmatrix}
+X_1 \\
+X_2 \\
+\vdots \\
+X_N
+\end{bmatrix}
+\]
+
+$X$ is called a random vector.
+
+Provides a compact representation of multiple random variables.
+
+\section*{3. Mean Vector}
+
+\textbf{Definition}
+
+\[
+\mu_X = E[X]
+\]
+
+\[
+\mu_X =
+\begin{bmatrix}
+E[X_1] \\
+E[X_2] \\
+\vdots \\
+E[X_N]
+\end{bmatrix}
+\]
+
+Represents the average value of the random vector.
+
+\section*{4. Correlation Matrix}
+
+\textbf{Definition}
+
+\[
+R_{XX} = E[XX^T]
+\]
+
+Element-wise:
+\[
+R_{XX}(i,j) = E[X_i X_j]
+\]
+
+Matrix form:
+\[
+R_{XX} =
+\begin{bmatrix}
+E[X_1 X_1] & E[X_1 X_2] & \cdots \\
+E[X_2 X_1] & E[X_2 X_2] & \cdots \\
+\vdots & \vdots & \ddots
+\end{bmatrix}
+\]
+
+$R_{XX}$ is symmetric.
+
+\section*{5. Covariance Matrix}
+
+\textbf{Definition}
+
+\[
+C_{XX} = E[(X - \mu_X)(X - \mu_X)^T]
+\]
+
+Structure:
+\[
+C_{XX} =
+\begin{bmatrix}
+\text{Var}(X_1) & \text{Cov}(X_2,X_1) \\
+\text{Cov}(X_1,X_2) & \text{Var}(X_2)
+\end{bmatrix}
+\]
+
+Symmetry:
+\[
+\text{Cov}(X_i,X_j) = \text{Cov}(X_j,X_i)
+\]
+
+\section*{6. Linear Transformation of Random Vectors}
+
+\[
+Y = AX + b
+\]
+
+$A$: transformation matrix (scaling, rotation) \\
+$b$: constant vector (shift/translation)
+
+Component form:
+\[
+Y_i = \sum_{j=1}^{N} a_{ij} X_j + b_i
+\]
+
+\section*{7. Mean of Transformed Vector}
+
+\[
+\mu_Y = E[Y]
+\]
+
+Step-by-step:
+
+\[
+\mu_Y = E[AX + b]
+\]
+\[
+\mu_Y = E[AX] + E[b]
+\]
+\[
+\mu_Y = A\mu_X + b
+\]
+
+\section*{8. Correlation Matrix Transformation}
+
+\[
+R_{YY} = E[YY^T] = E[(AX + b)(AX + b)^T]
+\]
+
+\[
+R_{YY} = AE[XX^T]A^T + AE[X]b^T + bE[X]^T A^T + bb^T
+\]
+
+\[
+R_{YY} = AR_{XX}A^T + A\mu_X b^T + b\mu_X^T A^T + bb^T
+\]
+
+\section*{9. Covariance Matrix Transformation}
+
+\[
+Y - \mu_Y = (AX + b) - (A\mu_X + b) = A(X - \mu_X)
+\]
+
+\[
+C_{YY} = E[(Y - \mu_Y)(Y - \mu_Y)^T]
+\]
+
+\[
+C_{YY} = E[A(X - \mu_X)(X - \mu_X)^T A^T]
+\]
+
+\[
+C_{YY} = AC_{XX}A^T
+\]
+
+Important: Shift $b$ does not affect covariance.
+
+\section*{10. Summary of Linear Transformation}
+
+\begin{itemize}
+\item Mean: $\mu_Y = A\mu_X + b$
+\item Covariance: $C_{YY} = AC_{XX}A^T$
+\item Correlation:
+\[
+R_{YY} = AR_{XX}A^T + A\mu_X b^T + b\mu_X^T A^T + bb^T
+\]
+\end{itemize}
+
+\section*{11. Numerical Example}
+
+Given $Y = AX$
+
+(a) Mean:
+\[
+\mu_Y = A\mu_X
+\]
+
+(b) Correlation:
+\[
+R_{YY} = AR_{XX}A^T
+\]
+
+(c) Covariance:
+\[
+C_{YY} = R_{YY} - \mu_Y \mu_Y^T
+\]
+
+\section*{12. Gaussian Distributions}
+
+1D Gaussian: Defined for a single random variable.
+
+2D Joint Gaussian: Joint PDF given in slides.
+
+\section*{13. Multivariate Gaussian Distribution}
+
+For $N$-dimensional vector:
+
+\[
+X = [X_1, X_2, \dots, X_N]^T
+\]
+
+\[
+f_X(x) = \frac{1}{(2\pi)^{N/2} \sqrt{\det(C_{XX})}} 
+\exp\left(-\frac{1}{2}(x - \mu_X)^T C_{XX}^{-1} (x - \mu_X)\right)
+\]
+
+Components:
+\begin{itemize}
+\item $\mu_X$: mean vector
+\item $C_{XX}$: covariance matrix
+\end{itemize}
+
+\section*{14. Special Case: Uncorrelated Gaussian Variables}
+
+Condition:
+\[
+\text{Cov}(X_i, X_j) = 0 \quad \forall i \neq j
+\]
+
+Implication:
+\begin{itemize}
+\item Covariance matrix becomes diagonal
+\item Joint PDF factorizes into product of individual Gaussians
+\end{itemize}
+
+\section*{15. Homework Problems}
+
+1. Mean from matrices:
+\[
+\mu_X \mu_X^T = R_{XX} - C_{XX}
+\]
+
+2. Variance identity:
+\[
+\text{Var}[X + Y] = \text{Var}[X] + \text{Var}[Y] + 2\text{Cov}(X,Y)
+\]
+
+\section*{16. Case Study: Smart City Traffic + Weather System}
+
+Step 1: Define random vector:
+\[
+X = [X_1, X_2, X_3, X_4, X_5]
+\]
+
+Where:
+\begin{itemize}
+\item $X_1$: Traffic flow
+\item $X_2$: Speed
+\item $X_3$: Rainfall
+\item $X_4$: Temperature
+\item $X_5$: AQI
+\end{itemize}
+
+Step 2: Mean vector:
+\[
+\mu_X = E[X]
+\]
+
+Step 3: Covariance matrix represents dependencies.
+
+Examples:
+\[
+\text{Cov}(X_1, X_3) > 0
+\]
+\[
+\text{Cov}(X_2, X_3) < 0
+\]
+
+Step 4: Gaussian assumption:
+\[
+X \sim N(\mu, \Sigma)
+\]
+
+Step 6: Linear transformation:
+\[
+Y = 0.6X_1 - 0.4X_2 + 0.8X_3
+\]
+
+\[
+E[Y] = a\mu_X
+\]
+
+\section*{17. Key Insights}
+
+\begin{itemize}
+\item Random vector = system state
+\item Covariance = relationships
+\item Gaussian = structured uncertainty
+\item Transformation = derived metrics
+\end{itemize}
+
+\section*{End of Lecture}
+
+\end{document}
